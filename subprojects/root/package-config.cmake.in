@@ -1,0 +1,14 @@
+@PACKAGE_INIT@
+
+function("_initialize_this_package" "_package_name")
+  set("${_package_name}_FOUND" TRUE PARENT_SCOPE)
+  foreach("_component_name" ${${_package_name}_FIND_COMPONENTS})
+    if(${_package_name}_FIND_REQUIRED_${_component_name})
+      find_package("${_package_name}.${_component_name}" REQUIRED)
+    else(${_package_name}_FIND_REQUIRED_${_component_name})
+      find_package("${_package_name}.${_component_name}")
+    endif(${_package_name}_FIND_REQUIRED_${_component_name})
+  endforeach("_component_name" ${${_package_name}_FIND_COMPONENTS})
+endfunction("_initialize_this_package" "_package_name")
+
+_initialize_this_package("@CMAKE_PROJECT_NAME@")
